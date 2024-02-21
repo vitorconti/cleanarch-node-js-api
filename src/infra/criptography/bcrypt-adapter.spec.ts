@@ -25,4 +25,19 @@ describe('Bcrypt Adapter', () => {
     const hashedPassword = await sut.encrypt('any_value')
     expect(hashedPassword).toEqual('hash')
   })
+  test('Should return hashed password on success', async () => {
+    const sut = makeSut()
+    const hashedPassword = await sut.encrypt('any_value')
+    expect(hashedPassword).toEqual('hash')
+  })
+
+  test('Should throw if hash throws', async () => {
+    const sut = makeSut()
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    jest.spyOn(bcrypt, 'hash').mockImplementationOnce(async () => await new Promise((_resolve, reject) => reject(new Error()))
+    )
+
+    const promise = sut.encrypt('any_value')
+    await expect(promise).rejects.toThrow()
+  })
 })
