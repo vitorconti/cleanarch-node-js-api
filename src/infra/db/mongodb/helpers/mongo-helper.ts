@@ -1,4 +1,5 @@
 import { Collection, MongoClient } from 'mongodb'
+import env from '../../../../main/config/env'
 
 export const MongoHelper = {
   client: null as unknown as MongoClient,
@@ -13,8 +14,11 @@ export const MongoHelper = {
       await this.client.close()
     }
   },
-  getCollection (name: string): Collection {
-    return this.client.db().collection('name')
+  async getCollection (name: string): Promise<Collection> {
+    if (!this.client?.isConnected()) {
+      await this.connect(env.mongoUrl)
+    }
+    return this.client.db().collection(name)
   },
   map<T> (collection: any): T {
     const { _id, ...collectionWithoutId } = collection
