@@ -28,7 +28,7 @@ export class LoginController implements Controller {
         body: ''
       }
     } catch (error: any) {
-      return serverError(error?.message)
+      return serverError(error)
     }
   }
 }
