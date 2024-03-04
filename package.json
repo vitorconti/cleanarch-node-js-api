@@ -51,6 +51,7 @@
 		"jsonwebtoken": "^9.0.2",
 		"mongodb": "^3.6.3",
 		"nodemon": "^2.0.12",
+		"rimraf": "^5.0.5",
 		"validator": "^13.11.0"
 	}
 }
