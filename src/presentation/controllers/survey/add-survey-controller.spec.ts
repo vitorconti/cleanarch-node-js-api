@@ -1,4 +1,4 @@
-import { badRequest, serverError } from '../../helpers/http/http-helper'
+import { badRequest, noCotent, serverError } from '../../helpers/http/http-helper'
 import { AddSurveyController } from './add-survey-controller'
 import { AddSurvey, AddSurveyModel, HttpRequest, Validation } from './add-survey-controller-protocols'
 
@@ -71,5 +71,10 @@ describe('AddSurvey Controller', () => {
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error('any_error')))
+  })
+  test('Should return 204 on succes', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(noCotent())
   })
 })
