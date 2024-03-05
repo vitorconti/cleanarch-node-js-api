@@ -1,4 +1,4 @@
-import { badRequest, serverError } from '../../helpers/http/http-helper'
+import { badRequest, noCotent, serverError } from '../../helpers/http/http-helper'
 import { AddSurvey, AddSurveyModel, Controller, HttpRequest, HttpResponse, Validation } from './add-survey-controller-protocols'
 
 export class AddSurveyController implements Controller {
@@ -15,10 +15,7 @@ export class AddSurveyController implements Controller {
       }
       const addSurveyDataModel: AddSurveyModel = httpRequest.body
       await this.addSurvey.add(addSurveyDataModel)
-      return await new Promise(resolve => resolve({
-        body: {},
-        statusCode: 1
-      }))
+      return noCotent()
     } catch (error: any) {
       return serverError(error)
     }
