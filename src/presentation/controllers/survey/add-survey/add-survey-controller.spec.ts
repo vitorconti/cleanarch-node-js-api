@@ -1,4 +1,4 @@
-import { badRequest, noCotent, serverError } from '../../helpers/http/http-helper'
+import { badRequest, noCotent, serverError } from '../../../helpers/http/http-helper'
 import { AddSurveyController } from './add-survey-controller'
 import { AddSurvey, AddSurveyModel, HttpRequest, Validation } from './add-survey-controller-protocols'
 import MockDate from 'mockdate'
