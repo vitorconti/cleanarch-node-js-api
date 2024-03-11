@@ -19,11 +19,11 @@ describe('Login Routes', () => {
   })
 
   describe('/POST /survey', () => {
-    test('Should return 204 on create survey', async () => {
+    test('Should return 403 add survey without accessToken', async () => {
       await request(app)
         .post('/api/survey')
         .send({ question: 'any_question', answers: [{ image: 'any_img', answer: 'any_answer' }] })
-        .expect(204)
+        .expect(403)
     })
   })
 })
