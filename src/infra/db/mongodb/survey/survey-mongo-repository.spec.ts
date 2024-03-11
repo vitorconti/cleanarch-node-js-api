@@ -32,7 +32,8 @@ describe('Survey Mongo Repository', () => {
         answer: 'any_answer'
       }, {
         answer: 'any_other_answer'
-      }]
+      }],
+      date: new Date()
     }
   }
   test('Should create a survey on call add method', async () => {
