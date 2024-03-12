@@ -18,6 +18,19 @@ const makeFakeSurvey = (): AddSurveyModel => {
     date: new Date()
   }
 }
+const makeOtherFakeSurvey = (): AddSurveyModel => {
+  return {
+    question: 'other_question',
+    answers: [{
+      image: 'other_image',
+      answer: 'other_answer'
+    }, {
+      answer: 'other_other_answer'
+    }],
+    date: new Date()
+  }
+}
+
 describe('Survey Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -46,12 +59,14 @@ describe('Survey Mongo Repository', () => {
     })
   })
   describe('loadAll()', () => {
-    test('Should create a survey on call add method', async () => {
+    test('Should load all surveys on success', async () => {
+      const fakeSurveys = [makeFakeSurvey(), makeOtherFakeSurvey()]
+      await surveyCollection.insertMany(fakeSurveys)
       const sut = makeSut()
-      const fakeSurvey = makeFakeSurvey()
-      await sut.add(fakeSurvey)
-      const survey = await surveyCollection.findOne({ question: fakeSurvey.question })
-      expect(survey).toEqual(fakeSurvey)
+      const surveys = await sut.loadAll() ?? []
+      expect(surveys?.length).toBe(2)
+      expect(surveys[0]?.question).toBe('any_question')
+      expect(surveys[1]?.question).toBe('other_question')
     })
   })
 })
